@@ -2,6 +2,7 @@
   "name": "web-workers-demo",
   "private": true,
   "version": "0.0.0",
+  "repository": "https://github.com/elawad/web-workers-demo.git",
   "homepage": "https://elawad.github.io/web-workers-demo",
   "type": "module",
   "engines": {
