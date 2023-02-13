@@ -26,18 +26,14 @@ const theme = {
     height: '100vh',
   },
   colors: {
-    // primary: '#fff',
-    tertiary: '#242424', // slide bg
+    secondary: 'var(--secondary)',
+    tertiary: 'var(--bg)', // slide bg
   },
   fonts: {
     header: '"Fira Code", "Helvetica Neue", Helvetica, Arial, sans-serif',
     text: '"Fira Code", "Helvetica Neue", Helvetica, Arial, sans-serif',
   },
   fontSizes: {
-    // h1: '72px',
-    // h2: '64px',
-    // h3: '56px',
-    // text: '44px',
     monospace: '1.5rem',
   },
 };
@@ -61,26 +57,26 @@ function Docs() {
         </Quote>
 
         <FlexBox alignItems="flex-end" justifyContent="unset" flex="1 1 auto">
-          <Text fontSize="0.85em" margin="0 0 4em 0" padding="0px">
+          <Text fontSize="0.85em" margin="4em 0" padding="0px">
             Aymen Elawad
             <br />
-            Feb, 2023
+            2023
           </Text>
         </FlexBox>
       </Slide>
 
       <Slide>
-        <Heading>Why use workers?</Heading>
+        <Heading>Why use Workers?</Heading>
 
         <UnorderedList>
           <Appear>
             <ListItem>JavaScript is a single-threaded language</ListItem>
           </Appear>
           <Appear>
-            <ListItem>All tasks run on the main thread</ListItem>
+            <ListItem>All tasks run on the main thread:</ListItem>
             <UnorderedList>
               <Appear>
-                <ListItem>JavaScript, Style, Layout, Paint, ...</ListItem>
+                <ListItem>JavaScript / Style / Render</ListItem>
               </Appear>
             </UnorderedList>
           </Appear>
@@ -114,9 +110,43 @@ function Docs() {
               <Appear>
                 <ListItem>Workers run in dedicated threads</ListItem>
               </Appear>
+              <Appear>
+                <ListItem>Frees up the main thread</ListItem>
+              </Appear>
             </UnorderedList>
           </Box>
         </FlexBox>
+      </Slide>
+
+      <Slide>
+        <Heading>Limitations</Heading>
+
+        <UnorderedList>
+          <Appear>
+            <ListItem>Can not access the DOM</ListItem>
+          </Appear>
+          <Appear>
+            <ListItem>Global Window not available</ListItem>
+          </Appear>
+          <Appear>
+            <ListItem>Data is copied between worker & main thread</ListItem>
+            <UnorderedList>
+              <Appear>
+                <ListItem>
+                  Some can be moved as a "Transferable Object"
+                </ListItem>
+              </Appear>
+            </UnorderedList>
+          </Appear>
+          <Appear>
+            <ListItem>Can use many standard Web APIs:</ListItem>
+            <UnorderedList>
+              <Appear>
+                <ListItem>Fetch API / FileReader / ImageData</ListItem>
+              </Appear>
+            </UnorderedList>
+          </Appear>
+        </UnorderedList>
       </Slide>
 
       <Slide>
@@ -133,10 +163,13 @@ function Docs() {
           <Box width={1}>
             <UnorderedList>
               <Appear>
-                <ListItem>UI runs on main thread</ListItem>
+                <ListItem>Main UI thread sends url to worker</ListItem>
               </Appear>
               <Appear>
-                <ListItem>Workers run in dedicated threads</ListItem>
+                <ListItem>Worker fetches & manipulates image</ListItem>
+              </Appear>
+              <Appear>
+                <ListItem>ImageData sent back to main thread</ListItem>
               </Appear>
             </UnorderedList>
           </Box>
@@ -144,7 +177,7 @@ function Docs() {
       </Slide>
 
       <Slide>
-        <Heading>Code Example</Heading>
+        <Heading>How to Use</Heading>
 
         <FlexBox justifyContent="space-around">
           <Appear>
@@ -165,10 +198,10 @@ function Docs() {
               // worker.js
 
               onmessage = (e) => {
-                  
-                // expensive work...
-                  
-                postMessage(e.data * 2)  
+
+                const result = e.data * 2
+
+                postMessage(result)
               }
             `}</CodePane>
           </Appear>

@@ -1,7 +1,10 @@
-/* Code Block Font */
+.docs ul ul {
+  list-style-type: square;
+}
+
+/* Code Block */
 .docs pre {
-  /* font-size: 1.5rem !important; */
-  background-color: #1a1a1a !important;
+  background-color: var(--btn) !important;
 }
 .docs code {
   font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',

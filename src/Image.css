@@ -1,0 +1,45 @@
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.image canvas {
+  object-fit: cover;
+  border-radius: 50%;
+  outline: 2px dotted var(--secondary);
+  width: var(--size);
+  height: var(--size);
+
+  transition-property: width, height, border-radius;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+.image.done canvas {
+  border-radius: 4px;
+}
+
+.image .logo {
+  position: absolute;
+  height: 3em;
+  padding: 0;
+}
+
+.image .logo {
+  animation: spin infinite 5s linear;
+}
+.image.done .logo {
+  animation: spin forwards 5s linear, fade forwards 0.5s linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}

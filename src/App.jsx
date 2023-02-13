@@ -1,34 +1,55 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-import reactLogo from './assets/react.svg';
 import './App.css';
+import Image from './Image';
+
+const worker = new Worker(new URL('./worker.js', import.meta.url));
+// const url = new URL('./worker.js', import.meta.url);
+// const worker = new Worker(url, { type: 'module' });
 
 function App() {
-  const [count, setCount] = useState(10);
-  const [files, setFiles] = useState([]);
+  const [fileMap, setFileMap] = useState(new Map());
   const fileRef = useRef();
+  const mountRef = useRef();
+
+  useEffect(() => {
+    if (mountRef.current) return;
+    mountRef.current = true;
+
+    worker.onmessage = (event) => {
+      const { id, image } = event.data;
+
+      setFileMap((prev) => {
+        const copy = new Map(prev);
+        copy.set(id, { image, isDone: true });
+        return copy;
+      });
+    };
+  }, []);
 
   function handleFileChange(event) {
     const { files } = event.target;
-    // for (const f of files) console.log(f.name, f.size);
-    setFiles([...files].map((f) => f.name));
+
+    const newFiles = [...files].filter((f) => !fileMap.get(f.name));
+    if (!newFiles.length) return;
+
+    setFileMap((prev) => {
+      const copy = new Map(prev);
+      newFiles.forEach((f) => copy.set(f.name));
+      return copy;
+    });
+
+    newFiles.forEach((f) => worker.postMessage({ id: f.name, file: f }));
   }
 
-  // const files = fileRef.current?.files.map((f) => f.name);
+  function handleReset() {
+    fileRef.current.value = null;
+    setFileMap(() => new Map());
+  }
 
   return (
-    <div className="App">
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1> */}
-
-      <div className="card">
+    <main className="app">
+      <div className="actions">
         <input
           ref={fileRef}
           onChange={handleFileChange}
@@ -37,28 +58,16 @@ function App() {
           multiple
           hidden
         />
-        <button onClick={() => fileRef.current.click()}>Select Files</button>
+        <button onClick={() => fileRef.current.click()}>Select Images</button>
+        <button onClick={handleReset}>×</button>
       </div>
 
-      <div className="card" style={{ textAlign: 'left' }}>
-        {files.map((f) => (
-          <h3 key={f}>{f}</h3>
+      <section className="images">
+        {[...fileMap.entries()].map(([k, v]) => (
+          <Image key={k} image={v?.image} isDone={v?.isDone} />
         ))}
-      </div>
-
-      {/* <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </div>
+      </section>
+    </main>
   );
 }
 
