@@ -8,6 +8,10 @@
   gap: 0.5em;
 }
 
+.app .actions select {
+  margin-left: 2em;
+}
+
 .app .images {
   display: flex;
   flex-wrap: wrap;

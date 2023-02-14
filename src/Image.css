@@ -12,34 +12,17 @@
   width: var(--size);
   height: var(--size);
 
-  transition-property: width, height, border-radius;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: border-radius 0.5s ease-out, width 0.5s ease-out 0.25s;
 }
 .image.done canvas {
   border-radius: 4px;
 }
 
-.image .logo {
+.image .loading {
   position: absolute;
-  height: 3em;
-  padding: 0;
+  width: 2em;
+  transition: opacity 0.25s ease-out;
 }
-
-.image .logo {
-  animation: spin infinite 5s linear;
-}
-.image.done .logo {
-  animation: spin forwards 5s linear, fade forwards 0.5s linear;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes fade {
-  to {
-    opacity: 0;
-  }
+.image.done .loading {
+  opacity: 0;
 }

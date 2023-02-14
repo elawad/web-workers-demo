@@ -7,6 +7,7 @@ import {
   FlexBox,
   Heading,
   Image,
+  Link,
   ListItem,
   Progress,
   Quote,
@@ -57,7 +58,7 @@ function Docs() {
         </Quote>
 
         <FlexBox alignItems="flex-end" justifyContent="unset" flex="1 1 auto">
-          <Text fontSize="0.85em" margin="4em 0" padding="0px">
+          <Text fontSize="0.85em">
             Aymen Elawad
             <br />
             2023
@@ -66,7 +67,7 @@ function Docs() {
       </Slide>
 
       <Slide>
-        <Heading>Why use Workers?</Heading>
+        <Heading>Why use Workers</Heading>
 
         <UnorderedList>
           <Appear>
@@ -76,7 +77,7 @@ function Docs() {
             <ListItem>All tasks run on the main thread:</ListItem>
             <UnorderedList>
               <Appear>
-                <ListItem>JavaScript / Style / Render</ListItem>
+                <ListItem>JavaScript / Style / Layout / Paint</ListItem>
               </Appear>
             </UnorderedList>
           </Appear>
@@ -97,9 +98,14 @@ function Docs() {
         <FlexBox justifyContent="space-between" alignItems="flex-start">
           <Box>
             <Image width={865} src={ImgRenderer} />
-            <Text fontSize="0.65em" margin="0px" padding="0px">
-              developer.chrome.com/blog/inside-browser-part3
-            </Text>
+            <Link
+              href="https://developer.chrome.com/blog/inside-browser-part3"
+              textDecoration="none"
+            >
+              <Text fontSize="0.35em" margin="0px" padding="0px">
+                developer.chrome.com/blog/inside-browser-part3
+              </Text>
+            </Link>
           </Box>
 
           <Box width={1}>
@@ -155,9 +161,14 @@ function Docs() {
         <FlexBox justifyContent="space-between" alignItems="flex-start">
           <Box>
             <Image width={865} src={ImgWorker} />
-            <Text fontSize="0.65em" margin="0px" padding="0px">
-              developer.chrome.com/blog/createimagebitmap-in-chrome-50
-            </Text>
+            <Link
+              href="https://developer.chrome.com/blog/createimagebitmap-in-chrome-50"
+              textDecoration="none"
+            >
+              <Text fontSize="0.35em" margin="0px" padding="0px">
+                developer.chrome.com/blog/createimagebitmap-in-chrome-50
+              </Text>
+            </Link>
           </Box>
 
           <Box width={1}>
@@ -213,6 +224,19 @@ function Docs() {
 
         <FlexBox>
           <App />
+        </FlexBox>
+      </Slide>
+
+      <Slide>
+        <Heading>Questions</Heading>
+
+        <FlexBox flexGrow={1} mb="10em">
+          <Link
+            href="https://github.com/elawad/web-workers-demo"
+            textDecoration="none"
+          >
+            <Text>github.com/elawad/web-workers-demo</Text>
+          </Link>
         </FlexBox>
       </Slide>
     </Deck>

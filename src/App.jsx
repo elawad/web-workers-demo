@@ -2,30 +2,37 @@ import { useState, useRef, useEffect } from 'react';
 
 import './App.css';
 import Image from './Image';
+import resizeFile from './resize';
 
-const worker = new Worker(new URL('./worker.js', import.meta.url));
-// const url = new URL('./worker.js', import.meta.url);
-// const worker = new Worker(url, { type: 'module' });
+const url = new URL('./worker.js', import.meta.url);
+let worker;
 
 function App() {
   const [fileMap, setFileMap] = useState(new Map());
+  const [workerCount, setWorkerCount] = useState(0);
   const fileRef = useRef();
-  const mountRef = useRef();
 
   useEffect(() => {
-    if (mountRef.current) return;
-    mountRef.current = true;
+    if (!workerCount) {
+      worker?.terminate();
+      worker = null;
+      return;
+    }
 
+    worker = new Worker(url, { type: 'module' });
     worker.onmessage = (event) => {
-      const { id, image } = event.data;
-
-      setFileMap((prev) => {
-        const copy = new Map(prev);
-        copy.set(id, { image, isDone: true });
-        return copy;
-      });
+      const { name, image } = event.data;
+      setImage(name, image);
     };
-  }, []);
+  }, [workerCount]);
+
+  function setImage(name, image) {
+    setFileMap((prev) => {
+      const copy = new Map(prev);
+      copy.set(name, image);
+      return copy;
+    });
+  }
 
   function handleFileChange(event) {
     const { files } = event.target;
@@ -39,7 +46,11 @@ function App() {
       return copy;
     });
 
-    newFiles.forEach((f) => worker.postMessage({ id: f.name, file: f }));
+    newFiles.forEach((file) => {
+      const { name } = file;
+      if (worker) worker.postMessage({ name, file });
+      else resizeFile(file).then((image) => setImage(name, image));
+    });
   }
 
   function handleReset() {
@@ -58,13 +69,20 @@ function App() {
           multiple
           hidden
         />
-        <button onClick={() => fileRef.current.click()}>Select Images</button>
+        <button onClick={() => fileRef.current.click()}>Pick Images</button>
         <button onClick={handleReset}>×</button>
+        <select
+          value={workerCount}
+          onChange={(e) => setWorkerCount(parseInt(e.target.value))}
+        >
+          <option value={0}>Worker Off</option>
+          <option value={1}>Worker On</option>
+        </select>
       </div>
 
       <section className="images">
-        {[...fileMap.entries()].map(([k, v]) => (
-          <Image key={k} image={v?.image} isDone={v?.isDone} />
+        {[...fileMap.entries()].map(([name, image]) => (
+          <Image key={name} image={image} />
         ))}
       </section>
     </main>

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
-import reactLogo from './assets/react.svg';
+import loadingImg from './assets/loading.svg';
 import './Image.css';
 
-function Image({ image, isDone }) {
+function Image({ image }) {
   const canvasRef = useRef();
 
   useEffect(() => {
@@ -11,8 +11,8 @@ function Image({ image, isDone }) {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-
     const { width: w, height: h } = image;
+
     canvas.style.width = `${w}px`;
     canvas.style.height = `${h}px`;
     canvas.width = w;
@@ -21,9 +21,11 @@ function Image({ image, isDone }) {
     ctx.drawImage(image, 0, 0);
   }, [image]);
 
+  const done = image !== undefined;
+
   return (
-    <div className={`image ${isDone ? 'done' : ''}`}>
-      <img src={reactLogo} className="logo" />
+    <div className={`image ${done ? 'done' : ''}`}>
+      <img src={loadingImg} className="loading" />
       <canvas ref={canvasRef} />
     </div>
   );
