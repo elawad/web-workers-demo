@@ -58,11 +58,7 @@ function Docs() {
         </Quote>
 
         <FlexBox alignItems="flex-end" justifyContent="unset" flex="1 1 auto">
-          <Text fontSize="0.85em">
-            Aymen Elawad
-            <br />
-            2023
-          </Text>
+          <Text fontSize="0.85em">Aymen Elawad / 2023</Text>
         </FlexBox>
       </Slide>
 
