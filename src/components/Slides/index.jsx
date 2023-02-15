@@ -16,8 +16,8 @@ import {
   UnorderedList,
 } from 'spectacle';
 
-import ImgRenderer from '../../assets/renderer.jpg';
-import ImgWorker from '../../assets/worker.jpg';
+import rendererImg from '../../assets/renderer.jpg';
+import workerImg from '../../assets/worker.jpg';
 import Demo from '../Demo';
 import './Slides.css';
 
@@ -93,7 +93,7 @@ function Docs() {
 
         <FlexBox justifyContent="space-between" alignItems="flex-start">
           <Box>
-            <Image width={865} src={ImgRenderer} />
+            <Image width={865} src={rendererImg} />
             <Link
               href="https://developer.chrome.com/blog/inside-browser-part3"
               textDecoration="none"
@@ -156,7 +156,7 @@ function Docs() {
 
         <FlexBox justifyContent="space-between" alignItems="flex-start">
           <Box>
-            <Image width={865} src={ImgWorker} />
+            <Image width={865} src={workerImg} />
             <Link
               href="https://developer.chrome.com/blog/createimagebitmap-in-chrome-50"
               textDecoration="none"

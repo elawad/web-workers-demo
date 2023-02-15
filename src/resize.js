@@ -1,6 +1,6 @@
 const HEIGHT = 200; // Match css var --size.
 
-async function resizeFile(file) {
+async function resize(file) {
   const original = await createImageBitmap(file).catch(() => null);
   if (!original) return null;
 
@@ -43,4 +43,4 @@ function opts(w, h) {
   };
 }
 
-export default resizeFile;
+export default resize;

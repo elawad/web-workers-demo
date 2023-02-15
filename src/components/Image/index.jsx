@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-import ImgLoading from '../../assets/loading.svg';
+import loadingImg from '../../assets/loading.svg';
 import './Image.css';
 
 function Image({ image }) {
@@ -25,7 +25,7 @@ function Image({ image }) {
 
   return (
     <div className={`image ${done ? 'done' : ''}`}>
-      <img src={ImgLoading} className="loading" />
+      <img src={loadingImg} className="loading" />
       <canvas ref={canvasRef} />
     </div>
   );

@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 
-import resizeFile from '../../lib/resize';
+import resize from '../../resize';
 import Image from '../Image';
 import './Demo.css';
 
-const worker = new Worker(new URL('../../lib/worker', import.meta.url), {
+const worker = new Worker(new URL('../../worker', import.meta.url), {
   type: 'module',
 });
 
 function App() {
   const [fileMap, setFileMap] = useState(new Map());
-  const [workerCount, setWorkerCount] = useState(0);
-  const fileRef = useRef();
   const mountRef = useRef();
+  const fileRef = useRef();
+  const countRef = useRef();
 
   useEffect(() => {
     if (mountRef.current) return;
@@ -40,19 +40,21 @@ function App() {
   function handleFileChange(event) {
     const { files } = event.target;
 
-    const newFiles = [...files].filter((f) => !fileMap.get(f.name));
+    const newFiles = [...files].filter((file) => !fileMap.get(file.name));
     if (!newFiles.length) return;
 
     setFileMap((prev) => {
       const copy = new Map(prev);
-      newFiles.forEach((f) => copy.set(f.name));
+      newFiles.forEach((file) => copy.set(file.name));
       return copy;
     });
 
+    const count = parseInt(countRef.current.value);
+
     newFiles.forEach((file) => {
       const { name } = file;
-      if (workerCount) worker.postMessage({ name, file });
-      else resizeFile(file).then((image) => setImage(name, image));
+      if (count) worker.postMessage({ name, file });
+      else resize(file).then((image) => setImage(name, image));
     });
   }
 
@@ -74,10 +76,7 @@ function App() {
         />
         <button onClick={() => fileRef.current.click()}>Pick Images</button>
         <button onClick={handleReset}>×</button>
-        <select
-          value={workerCount}
-          onChange={(e) => setWorkerCount(parseInt(e.target.value))}
-        >
+        <select ref={countRef} defaultValue={0}>
           <option value={0}>Worker Off</option>
           <option value={1}>Worker On</option>
         </select>
