@@ -18,7 +18,7 @@ import {
 
 import rendererImg from '../../assets/renderer.jpg';
 import workerImg from '../../assets/worker.jpg';
-import Demo from '../Demo';
+import App from '../App';
 import './Slides.css';
 
 const theme = {
@@ -47,7 +47,7 @@ const template = () => (
   </FlexBox>
 );
 
-function Docs() {
+function Slides() {
   return (
     <Deck theme={theme} template={template} className="slides">
       <Slide>
@@ -219,7 +219,7 @@ function Docs() {
         <Heading>Demo</Heading>
 
         <FlexBox>
-          <Demo />
+          <App />
         </FlexBox>
       </Slide>
 
@@ -270,4 +270,4 @@ function Docs() {
   );
 }
 
-export default Docs;
+export default Slides;

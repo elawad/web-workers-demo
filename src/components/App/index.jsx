@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 import resize from '../../resize';
 import Image from '../Image';
-import './Demo.css';
+import './App.css';
 
 const worker = new Worker(new URL('../../worker', import.meta.url), {
   type: 'module',
