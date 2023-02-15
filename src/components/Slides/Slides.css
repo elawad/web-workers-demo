@@ -1,12 +1,12 @@
-.docs ul ul {
+.slides ul ul {
   list-style-type: square;
 }
 
 /* Code Block */
-.docs pre {
+.slides pre {
   background-color: var(--btn) !important;
 }
-.docs code {
+.slides code {
   font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
     monospace !important;
 }

@@ -16,10 +16,10 @@ import {
   UnorderedList,
 } from 'spectacle';
 
-import ImgRenderer from './assets/renderer.jpg';
-import ImgWorker from './assets/worker.jpg';
-import App from './App';
-import './Docs.css';
+import ImgRenderer from '../../assets/renderer.jpg';
+import ImgWorker from '../../assets/worker.jpg';
+import Demo from '../Demo';
+import './Slides.css';
 
 const theme = {
   size: {
@@ -27,8 +27,8 @@ const theme = {
     height: '100vh',
   },
   colors: {
-    secondary: 'var(--secondary)',
-    tertiary: 'var(--bg)', // slide bg
+    secondary: 'var(--secondary)', // header
+    tertiary: 'var(--bg)', // background
   },
   fonts: {
     header: '"Fira Code", "Helvetica Neue", Helvetica, Arial, sans-serif',
@@ -49,7 +49,7 @@ const template = () => (
 
 function Docs() {
   return (
-    <Deck theme={theme} template={template} className="docs">
+    <Deck theme={theme} template={template} className="slides">
       <Slide>
         <Heading>Web Workers</Heading>
 
@@ -223,7 +223,7 @@ function Docs() {
         <Heading>Demo</Heading>
 
         <FlexBox>
-          <App />
+          <Demo />
         </FlexBox>
       </Slide>
 

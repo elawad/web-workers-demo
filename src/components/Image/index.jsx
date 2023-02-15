@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-import loadingImg from './assets/loading.svg';
+import loadingImg from '../../assets/loading.svg';
 import './Image.css';
 
 function Image({ image }) {

@@ -5,6 +5,7 @@
   --size: 200px;
 
   background-color: var(--bg);
+  color: rgba(255, 255, 255, 0.87);
   font-family: 'Fira Code', Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   font-weight: 400;
@@ -17,7 +18,7 @@
 }
 
 body {
-  margin: 0;
+  margin: 2em;
 }
 
 button,

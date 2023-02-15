@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './index.css';
-import Docs from './Docs';
-// import App from './App';
+import Slides from './components/Slides';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Docs />
-    {/* <App /> */}
+    <Slides />
   </React.StrictMode>
 );

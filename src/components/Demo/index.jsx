@@ -1,30 +1,33 @@
 import { useState, useRef, useEffect } from 'react';
 
-import './App.css';
-import Image from './Image';
-import resizeFile from './resize';
+import resizeFile from '../../lib/resize';
+import Image from '../Image';
+import './Demo.css';
 
-const url = new URL('./worker.js', import.meta.url);
-let worker;
+const worker = new Worker(new URL('../../lib/worker', import.meta.url), {
+  type: 'module',
+});
 
 function App() {
   const [fileMap, setFileMap] = useState(new Map());
   const [workerCount, setWorkerCount] = useState(0);
   const fileRef = useRef();
+  const mountRef = useRef();
 
   useEffect(() => {
-    if (!workerCount) {
-      worker?.terminate();
-      worker = null;
-      return;
-    }
+    if (mountRef.current) return;
+    mountRef.current = true;
 
-    worker = new Worker(url, { type: 'module' });
     worker.onmessage = (event) => {
       const { name, image } = event.data;
       setImage(name, image);
     };
-  }, [workerCount]);
+
+    worker.onerror = (event) => {
+      console.error('Web Worker Error');
+      console.log(event);
+    };
+  }, []);
 
   function setImage(name, image) {
     setFileMap((prev) => {
@@ -48,7 +51,7 @@ function App() {
 
     newFiles.forEach((file) => {
       const { name } = file;
-      if (worker) worker.postMessage({ name, file });
+      if (workerCount) worker.postMessage({ name, file });
       else resizeFile(file).then((image) => setImage(name, image));
     });
   }
