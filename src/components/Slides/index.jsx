@@ -57,8 +57,10 @@ function Docs() {
           <Text>Offloading work from the main thread.</Text>
         </Quote>
 
-        <FlexBox alignItems="flex-end" justifyContent="unset" flex="1 1 auto">
-          <Text fontSize="0.85em">Aymen Elawad / 2023</Text>
+        <FlexBox alignItems="flex-end" justifyContent="unset" flexGrow={1}>
+          <Text fontSize="0.85em" mb="0 !important" pb="0 !important">
+            Aymen Elawad / 2023
+          </Text>
         </FlexBox>
       </Slide>
 
@@ -187,8 +189,7 @@ function Docs() {
         <Heading>How to Use</Heading>
 
         <FlexBox justifyContent="space-around">
-          <Appear>
-            <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
+          <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
               // main.js
               const worker = new Worker('worker.js')
                 
@@ -198,7 +199,6 @@ function Docs() {
                 console.log(e.data)
               }
             `}</CodePane>
-          </Appear>
 
           <Appear>
             <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
@@ -224,16 +224,47 @@ function Docs() {
       </Slide>
 
       <Slide>
-        <Heading>Questions</Heading>
+        <Heading>Info</Heading>
 
-        <FlexBox flexGrow={1} mb="10em">
+        <Text mb="2em !important">
           <Link
             href="https://github.com/elawad/web-workers-demo"
             textDecoration="none"
+            color="inherit"
           >
-            <Text>github.com/elawad/web-workers-demo</Text>
+            github.com/elawad/web-workers-demo
           </Link>
-        </FlexBox>
+        </Text>
+
+        <Appear>
+          <Text fontSize="1em">
+            Web Workers
+            <br />
+            <Link
+              href="https://developer.mozilla.org/docs/Web/API/Web_Workers_API"
+              textDecoration="none"
+              color="inherit"
+              fontSize="1.5em"
+            >
+              developer.mozilla.org/docs/Web/API/Web_Workers_API
+            </Link>
+          </Text>
+        </Appear>
+
+        <Appear>
+          <Text fontSize="1em">
+            Node Worker Threads
+            <br />
+            <Link
+              href="https://nodejs.org/api/worker_threads.html#worker-threads"
+              textDecoration="none"
+              color="inherit"
+              fontSize="1.5em"
+            >
+              nodejs.org/api/worker_threads.html
+            </Link>
+          </Text>
+        </Appear>
       </Slide>
     </Deck>
   );
