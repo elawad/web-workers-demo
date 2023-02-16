@@ -215,7 +215,7 @@ function Slides() {
         </FlexBox>
       </Slide>
 
-      <Slide>
+      <Slide className="app">
         <Heading>Demo</Heading>
 
         <FlexBox>

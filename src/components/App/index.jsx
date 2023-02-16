@@ -13,6 +13,7 @@ function App() {
   const mountRef = useRef();
   const fileRef = useRef();
   const countRef = useRef();
+  const sizeRef = useRef();
 
   useEffect(() => {
     if (mountRef.current) return;
@@ -20,19 +21,18 @@ function App() {
 
     worker.onmessage = (event) => {
       const { name, image } = event.data;
-      setImage(name, image);
+      setImage({ name, image });
     };
-
-    worker.onerror = (event) => {
-      console.error('Web Worker Error');
-      console.log(event);
-    };
+    worker.onerror = console.error;
   }, []);
 
-  function setImage(name, image) {
+  function setImage({ name, image }) {
+    if (!fileRef.current.value) return;
+
     setFileMap((prev) => {
       const copy = new Map(prev);
-      copy.set(name, image);
+      const data = copy.get(name);
+      copy.set(name, { ...data, image });
       return copy;
     });
   }
@@ -43,18 +43,19 @@ function App() {
     const newFiles = [...files].filter((file) => !fileMap.get(file.name));
     if (!newFiles.length) return;
 
+    const count = parseInt(countRef.current.value);
+    const size = parseInt(sizeRef.current.value);
+
     setFileMap((prev) => {
       const copy = new Map(prev);
-      newFiles.forEach((file) => copy.set(file.name));
+      newFiles.forEach((file) => copy.set(file.name, { size }));
       return copy;
     });
 
-    const count = parseInt(countRef.current.value);
-
     newFiles.forEach((file) => {
       const { name } = file;
-      if (count) worker.postMessage({ name, file });
-      else resize(file).then((image) => setImage(name, image));
+      if (count) worker.postMessage({ name, file, size });
+      else resize({ file, size }).then((image) => setImage({ name, image }));
     });
   }
 
@@ -76,16 +77,27 @@ function App() {
         />
         <button onClick={() => fileRef.current.click()}>Pick Images</button>
         <button onClick={handleReset}>×</button>
-        <select ref={countRef} defaultValue={0}>
-          <option value={0}>Worker Off</option>
-          <option value={1}>Worker On</option>
+
+        <select ref={countRef} defaultValue={1}>
+          <option disabled>Thread</option>
+          <option value={1}>Worker</option>
+          <option value={0}>Main Thread</option>
+        </select>
+
+        <select ref={sizeRef} defaultValue={240}>
+          <option disabled>Image Size</option>
+          <option value={160}>160</option>
+          <option value={240}>240</option>
+          <option value={320}>320</option>
+          <option value={480}>480</option>
         </select>
       </div>
 
       <section className="images">
-        {[...fileMap.entries()].map(([name, image]) => (
-          <Image key={name} image={image} />
-        ))}
+        {[...fileMap.entries()].map((entry) => {
+          const [name, { image, size }] = entry;
+          return <Image key={name} image={image} size={size} />;
+        })}
       </section>
     </main>
   );

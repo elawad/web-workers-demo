@@ -1,31 +1,29 @@
-const HEIGHT = 200; // Match css var --size.
-
-async function resize(file) {
+async function resize({ file, size }) {
   const original = await createImageBitmap(file).catch(() => null);
   if (!original) return null;
 
   let image = original;
-  let [w, h] = stepSizes(image);
+  let [w, h] = stepSizes(image, size);
 
   // Resize using step-down for better image quality.
-  while (h > HEIGHT) {
+  while (h > size) {
     image = await createImageBitmap(image, opts(w, h));
-    [w, h] = stepSizes(image);
+    [w, h] = stepSizes(image, size);
   }
 
   // Final resize to fit dimensions.
-  if (h <= HEIGHT) {
-    [w, h] = stepSizes(image, true);
+  if (h <= size) {
+    [w, h] = stepSizes(image, size, true);
     image = await createImageBitmap(image, opts(w, h));
   }
 
   return image;
 }
 
-function stepSizes(image, isFinal) {
+function stepSizes(image, size, isFinal) {
   if (isFinal) {
-    const w = Math.round(image.width / (image.height / HEIGHT));
-    const h = HEIGHT;
+    const w = Math.round(image.width / (image.height / size));
+    const h = size;
     return [w, h];
   }
 

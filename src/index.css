@@ -2,7 +2,6 @@
   --bg: #242424;
   --btn: #1a1a1a;
   --secondary: #fc6986;
-  --size: 200px;
 
   background-color: var(--bg);
   color: rgba(255, 255, 255, 0.87);
@@ -18,7 +17,7 @@
 }
 
 body {
-  margin: 2em;
+  margin: 1.5em;
 }
 
 button,
@@ -43,4 +42,8 @@ button:focus-visible,
 select:focus,
 select:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+select {
+  -webkit-appearance: none;
 }

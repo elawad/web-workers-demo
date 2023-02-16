@@ -9,8 +9,6 @@
   object-fit: cover;
   border-radius: 50%;
   outline: 2px dotted var(--secondary);
-  width: var(--size);
-  height: var(--size);
   transition: border-radius 0.5s ease-out, width 0.5s ease-out 0.25s;
 }
 .image.done canvas {
