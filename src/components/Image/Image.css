@@ -8,11 +8,11 @@
 .image canvas {
   object-fit: cover;
   border-radius: 50%;
-  outline: 2px dotted var(--secondary);
+  border: 2px dotted var(--secondary);
   transition: border-radius 0.5s ease-out, width 0.5s ease-out 0.25s;
 }
 .image.done canvas {
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
 .image .loading {

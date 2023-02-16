@@ -1,15 +1,20 @@
 .slides .app {
   overflow-y: auto;
-  padding: 2px;
 }
 
 .slides ul ul {
   list-style-type: square;
 }
 
+.slides pre,
+.slides img[width] {
+  border-radius: var(--radius);
+}
+
 /* Code Block */
 .slides pre {
   background-color: var(--btn) !important;
+  padding-inline: 0.7em !important;
 }
 .slides code {
   font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
