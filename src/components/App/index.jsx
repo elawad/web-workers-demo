@@ -1,61 +1,48 @@
 import { useState, useRef, useEffect } from 'react';
 
-import resize from '../../resize';
+import { callWorker, updateCount, countList } from '../../worker-pool';
 import Image from '../Image';
 import './App.css';
 
-const worker = new Worker(new URL('../../worker', import.meta.url), {
-  type: 'module',
-});
-
 function App() {
   const [fileMap, setFileMap] = useState(new Map());
-  const mountRef = useRef();
   const fileRef = useRef();
   const countRef = useRef();
   const sizeRef = useRef();
 
-  useEffect(() => {
-    if (mountRef.current) return;
-    mountRef.current = true;
-
-    worker.onmessage = (event) => {
-      const { name, image } = event.data;
-      setImage({ name, image });
-    };
-    worker.onerror = console.error;
-  }, []);
-
-  function setImage({ name, image }) {
+  function setImage(id, image) {
     if (!fileRef.current.value) return;
 
     setFileMap((prev) => {
       const copy = new Map(prev);
-      const data = copy.get(name);
-      copy.set(name, { ...data, image });
+      const data = copy.get(id);
+      copy.set(id, { ...data, image });
       return copy;
     });
   }
 
   function handleFileChange(event) {
-    const { files } = event.target;
+    const all = event.target.files;
+    const files = [...all].filter((file) => !fileMap.get(file.name));
 
-    const newFiles = [...files].filter((file) => !fileMap.get(file.name));
-    if (!newFiles.length) return;
+    if (!files.length) return;
+
+    const ids = files.map((file) => file.name);
 
     const count = parseInt(countRef.current.value);
     const size = parseInt(sizeRef.current.value);
 
-    setFileMap((prev) => {
-      const copy = new Map(prev);
-      newFiles.forEach((file) => copy.set(file.name, { size }));
-      return copy;
+    updateCount(count);
+
+    files.forEach((file) => {
+      const id = file.name;
+      callWorker(id, file, size, setImage);
     });
 
-    newFiles.forEach((file) => {
-      const { name } = file;
-      if (count) worker.postMessage({ name, file, size });
-      else resize({ file, size }).then((image) => setImage({ name, image }));
+    setFileMap((prev) => {
+      const copy = new Map(prev);
+      ids.forEach((id) => copy.set(id, { size }));
+      return copy;
     });
   }
 
@@ -78,10 +65,14 @@ function App() {
         <button onClick={() => fileRef.current.click()}>Pick Images</button>
         <button onClick={handleReset}>×</button>
 
-        <select ref={countRef} defaultValue={1}>
-          <option disabled>Thread</option>
-          <option value={1}>Worker</option>
+        <select ref={countRef} defaultValue={0}>
+          <option disabled>Worker Count</option>
           <option value={0}>Main Thread</option>
+          {countList.map((n) => (
+            <option key={n} value={n}>
+              {n} Worker{n === 1 ? '' : 's'}
+            </option>
+          ))}
         </select>
 
         <select ref={sizeRef} defaultValue={240}>
@@ -94,9 +85,9 @@ function App() {
       </div>
 
       <section className="images">
-        {[...fileMap.entries()].map((entry) => {
-          const [name, { image, size }] = entry;
-          return <Image key={name} image={image} size={size} />;
+        {[...fileMap.entries()].map(([k, v]) => {
+          const { image, size } = v;
+          return <Image key={k} image={image} size={size} />;
         })}
       </section>
     </main>

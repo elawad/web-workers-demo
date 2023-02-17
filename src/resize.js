@@ -1,5 +1,9 @@
-async function resize({ file, size }) {
-  const original = await createImageBitmap(file).catch(() => null);
+async function resize(file, size) {
+  const original = await createImageBitmap(file).catch((err) => {
+    console.error(err);
+    return null;
+  });
+
   if (!original) return null;
 
   let image = original;

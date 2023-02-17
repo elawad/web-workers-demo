@@ -1,9 +1,9 @@
 import resize from './resize';
 
 onmessage = async (event) => {
-  const { name, file, size } = event.data;
+  const { id, file, size } = event.data;
 
-  const image = await resize({ file, size });
+  const image = await resize(file, size);
 
-  postMessage({ name, image });
+  postMessage({ id, image });
 };
