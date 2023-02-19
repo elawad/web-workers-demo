@@ -8,7 +8,5 @@ import Slides from './components/Slides';
 const app = window.location.search === '?app';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    {app ? <App /> : <Slides />}
-  </StrictMode>
+  <StrictMode>{app ? <App /> : <Slides />}</StrictMode>
 );

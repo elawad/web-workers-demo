@@ -59,7 +59,7 @@ function Slides() {
 
         <FlexBox alignItems="flex-end" justifyContent="unset" flexGrow={1}>
           <Text fontSize="0.85em" mb="0 !important" pb="0 !important">
-            Aymen Elawad / 2023
+            Aymen / 2023
           </Text>
         </FlexBox>
       </Slide>
@@ -137,7 +137,7 @@ function Slides() {
             <UnorderedList>
               <Appear>
                 <ListItem>
-                  Some can be moved as a "Transferable Object"
+                  Some can be moved as a &quot;Transferable Object&quot;
                 </ListItem>
               </Appear>
             </UnorderedList>
@@ -190,15 +190,15 @@ function Slides() {
 
         <FlexBox justifyContent="space-around">
           <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
-              // main.js
-              const worker = new Worker('worker.js')
+            // main.js
+            const worker = new Worker('worker.js')
                 
-              worker.postMessage(10)
+            worker.postMessage(10)
                 
-              worker.onmessage = (e) => {
-                console.log(e.data)
-              }
-            `}</CodePane>
+            worker.onmessage = (e) => {
+              console.log(e.data)
+            }
+          `}</CodePane>
 
           <Appear>
             <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
@@ -224,7 +224,7 @@ function Slides() {
       </Slide>
 
       <Slide>
-        <Heading>Info</Heading>
+        <Heading>Resources</Heading>
 
         <Text mb="2em !important">
           <Link
@@ -238,7 +238,7 @@ function Slides() {
 
         <Appear>
           <Text fontSize="1em">
-            Web Workers
+            Browser
             <br />
             <Link
               href="https://developer.mozilla.org/docs/Web/API/Web_Workers_API"
@@ -246,14 +246,12 @@ function Slides() {
               color="inherit"
               fontSize="1.5em"
             >
-              developer.mozilla.org/docs/Web/API/Web_Workers_API
+              Web Workers
             </Link>
           </Text>
-        </Appear>
 
-        <Appear>
           <Text fontSize="1em">
-            Node Worker Threads
+            Node
             <br />
             <Link
               href="https://nodejs.org/api/worker_threads.html#worker-threads"
@@ -261,7 +259,7 @@ function Slides() {
               color="inherit"
               fontSize="1.5em"
             >
-              nodejs.org/api/worker_threads.html
+              Worker Threads
             </Link>
           </Text>
         </Appear>

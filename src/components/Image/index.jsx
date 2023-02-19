@@ -1,7 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 
 import loadingImg from '../../assets/loading.svg';
 import './Image.css';
+
+const propTypes = {
+  image: PropTypes.object, // ImageBitmap type,
+  size: PropTypes.number,
+};
 
 function Image({ image, size }) {
   const canvasRef = useRef();
@@ -22,10 +28,11 @@ function Image({ image, size }) {
 
   return (
     <div className={`image ${done ? 'done' : ''}`}>
-      <img src={loadingImg} className="loading" />
+      <img src={loadingImg} className="loading" alt="Loading" />
       <canvas ref={canvasRef} style={{ width: `${w}px`, height: `${h}px` }} />
     </div>
   );
 }
 
+Image.propTypes = propTypes;
 export default Image;

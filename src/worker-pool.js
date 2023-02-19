@@ -1,6 +1,5 @@
 import resize from './resize';
 
-const maxCount = navigator.hardwareConcurrency;
 const workers = [];
 const callbacks = new Map();
 let index = -1;
@@ -21,7 +20,8 @@ async function start(id, file, size, cb) {
 }
 
 function setCount(c = 0) {
-  const count = c > maxCount ? maxCount : c;
+  const max = counts.at(-1);
+  const count = c > max ? max : Math.max(0, c);
 
   // Remove Workers
   while (count < workers.length) {
@@ -54,9 +54,10 @@ function reset(count) {
 }
 
 const counts = (() => {
-  const sqrt = Math.ceil(Math.sqrt(maxCount) + 1);
-  const keys = Array(sqrt).keys();
-  return [...keys].map((i) => 2 ** i).filter((i) => i <= maxCount);
+  const limit = navigator.hardwareConcurrency;
+  const sqrt = Math.ceil(Math.sqrt(limit) + 1);
+  const keys = [...Array(sqrt).keys()];
+  return keys.map((i) => 2 ** i).filter((i) => i <= limit);
 })();
 
 export { start, setCount, reset, counts };
