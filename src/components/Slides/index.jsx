@@ -59,7 +59,7 @@ function Slides() {
 
         <FlexBox alignItems="flex-end" justifyContent="unset" flexGrow={1}>
           <Text fontSize="0.85em" mb="0 !important" pb="0 !important">
-            Aymen / 2023
+            Aymen Elawad
           </Text>
         </FlexBox>
       </Slide>
@@ -97,12 +97,10 @@ function Slides() {
           <Box>
             <Image width={865} src={rendererImg} />
             <Link
+              fontSize="0.65em"
               href="https://developer.chrome.com/blog/inside-browser-part3"
-              textDecoration="none"
             >
-              <Text fontSize="0.35em" margin="0px" padding="0px">
-                developer.chrome.com/blog/inside-browser-part3
-              </Text>
+              Chrome Developers
             </Link>
           </Box>
 
@@ -164,7 +162,7 @@ function Slides() {
               textDecoration="none"
             >
               <Text fontSize="0.35em" margin="0px" padding="0px">
-                developer.chrome.com/blog/createimagebitmap-in-chrome-50
+                Chrome Developers
               </Text>
             </Link>
           </Box>
@@ -226,40 +224,28 @@ function Slides() {
       <Slide>
         <Heading>Resources</Heading>
 
-        <Text mb="2em !important">
-          <Link
-            href="https://github.com/elawad/web-workers-demo"
-            textDecoration="none"
-            color="inherit"
-          >
+        <Text>
+          <Link href="https://github.com/elawad/web-workers-demo">
             github.com/elawad/web-workers-demo
           </Link>
         </Text>
 
         <Appear>
-          <Text fontSize="1em">
-            Browser
-            <br />
+          <Text mt="2em !important">
             <Link
               href="https://developer.mozilla.org/docs/Web/API/Web_Workers_API"
-              textDecoration="none"
-              color="inherit"
-              fontSize="1.5em"
+              fontSize="0.7em"
             >
-              Web Workers
+              MDN Web Workers
             </Link>
           </Text>
 
-          <Text fontSize="1em">
-            Node
-            <br />
+          <Text pt="0 !important">
             <Link
               href="https://nodejs.org/api/worker_threads.html#worker-threads"
-              textDecoration="none"
-              color="inherit"
-              fontSize="1.5em"
+              fontSize="0.7em"
             >
-              Worker Threads
+              Node Worker Threads
             </Link>
           </Text>
         </Appear>

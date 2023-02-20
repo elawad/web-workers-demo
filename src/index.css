@@ -2,6 +2,8 @@
   --bg: #242424;
   --btn: #1a1a1a;
   --secondary: #fc6986;
+  --actions: #646cff;
+  /* --actions: #ffc951; */
   --radius: 8px;
 
   background-color: var(--bg);
@@ -36,15 +38,41 @@ select {
 }
 button:hover,
 select:hover {
-  border-color: #646cff;
+  border-color: var(--actions);
 }
 button:focus,
 button:focus-visible,
 select:focus,
 select:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  /* outline: 4px auto -webkit-focus-ring-color; */
+  outline: 1px ridge var(--actions);
 }
 
 select {
   -webkit-appearance: none;
+}
+
+a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+a::before {
+  content: '';
+  position: absolute;
+  /* width: 100%; */
+  width: 6rem;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  background-color: var(--actions);
+  transform: scaleX(0.1);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+a:hover::before {
+  transform: scaleX(1);
 }
