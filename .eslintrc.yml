@@ -1,6 +1,7 @@
 extends:
   - eslint:recommended
   - plugin:react/recommended
+  - plugin:react-hooks/recommended
   - plugin:react/jsx-runtime
   - plugin:import/recommended
   - plugin:jsx-a11y/recommended
@@ -12,9 +13,6 @@ env:
 
 parserOptions:
   ecmaVersion: latest
-  # sourceType: module
-  ecmaFeatures:
-    jsx: true
 
 settings:
   import/resolver:
