@@ -23,14 +23,14 @@ async function resize(file, size) {
 
 function stepSizes(image, size, isFinal) {
   if (isFinal) {
-    const w = Math.round(image.width / (image.height / size));
+    const w = image.width / (image.height / size);
     const h = size;
     return [w, h];
   }
 
-  const factor = 0.75;
-  const w = Math.round(image.width * factor);
-  const h = Math.round(image.height * factor);
+  const factor = 0.5;
+  const w = image.width * factor;
+  const h = image.height * factor;
   return [w, h];
 }
 

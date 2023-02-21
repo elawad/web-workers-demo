@@ -26,6 +26,7 @@ function App() {
     const all = [...fileRef.current.files];
     const count = parseInt(countRef.current.value);
     const size = parseInt(sizeRef.current.value);
+    const sizeX = size * window.devicePixelRatio;
 
     Workers.setCount(count);
 
@@ -39,7 +40,7 @@ function App() {
       return copy;
     });
 
-    files.forEach((file) => Workers.start(file.name, file, size, setImage));
+    files.forEach((file) => Workers.start(file.name, file, sizeX, setImage));
   }
 
   function handleReset() {
