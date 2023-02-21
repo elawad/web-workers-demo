@@ -6,26 +6,27 @@ import './Image.css';
 
 const propTypes = {
   size: PropTypes.number.isRequired,
+  dpr: PropTypes.number.isRequired,
   image: PropTypes.object, // ImageBitmap type,
 };
 
-function Image({ size, image }) {
+function Image({ size, dpr, image }) {
   const canvasRef = useRef();
 
   useEffect(() => {
     if (!image) return;
 
-    const [w, h, dpr] = getSizes(image);
+    const [w, h] = getSizes(image, dpr);
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     canvas.width = image.width;
     canvas.height = image.height;
     ctx.scale(dpr, dpr);
     ctx.drawImage(image, 0, 0, w, h);
-  }, [image]);
+  }, [image, dpr]);
 
   const done = image !== undefined;
-  const [w, h] = getSizes(image) ?? [size, size];
+  const [w, h] = getSizes(image, dpr) ?? [size, size];
 
   return (
     <div className={`image ${done ? 'done' : ''}`}>
@@ -35,13 +36,12 @@ function Image({ size, image }) {
   );
 }
 
-function getSizes(image) {
+function getSizes(image, dpr) {
   if (!image) return;
 
-  const dpr = window.devicePixelRatio;
   const w = image.width / dpr;
   const h = image.height / dpr;
-  return [w, h, dpr];
+  return [w, h];
 }
 
 Image.propTypes = propTypes;

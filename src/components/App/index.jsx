@@ -26,7 +26,8 @@ function App() {
     const all = [...fileRef.current.files];
     const count = parseInt(countRef.current.value);
     const size = parseInt(sizeRef.current.value);
-    const sizeX = size * window.devicePixelRatio;
+    const dpr = window.devicePixelRatio;
+    const sizeX = size * dpr;
 
     Workers.setCount(count);
 
@@ -36,7 +37,7 @@ function App() {
 
     setImageMap((prev) => {
       const copy = new Map(prev);
-      files.forEach((file) => copy.set(file.name, { size }));
+      files.forEach((file) => copy.set(file.name, { size, dpr }));
       return copy;
     });
 
