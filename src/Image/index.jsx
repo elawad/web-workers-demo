@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 
-import loadingImg from '../../assets/loading.svg';
-import './Image.css';
+import loadingImg from './loading.svg';
+import './index.css';
 
 const propTypes = {
   size: PropTypes.number.isRequired,

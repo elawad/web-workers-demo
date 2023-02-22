@@ -7,11 +7,8 @@ async function resize(file, size) {
 
   // Resize using step-down for better image quality.
   while (h >= size) {
-    image = await createImageBitmap(image, {
-      resizeWidth: w,
-      resizeHeight: h,
-      resizeQuality: 'high',
-    });
+    const opts = { resizeWidth: w, resizeHeight: h, resizeQuality: 'high' };
+    image = await createImageBitmap(image, opts);
 
     [w, h] = stepSizes(image, size);
   }

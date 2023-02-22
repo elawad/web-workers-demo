@@ -1,7 +1,7 @@
 import resize from './resize';
 
-const workers = [];
 const callbacks = new Map();
+const workers = [];
 let index = -1;
 
 async function start(id, file, size, cb) {

@@ -16,10 +16,11 @@ import {
   UnorderedList,
 } from 'spectacle';
 
-import rendererImg from '../../assets/renderer.jpg';
-import workerImg from '../../assets/worker.jpg';
 import App from '../App';
-import './Slides.css';
+
+import rendererImg from './renderer.jpg';
+import workerImg from './worker.jpg';
+import './index.css';
 
 const theme = {
   size: {

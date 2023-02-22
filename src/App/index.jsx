@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 
-import * as Workers from '../../worker-pool';
 import Image from '../Image';
-import './App.css';
+import * as Workers from '../workers';
+import './index.css';
 
 function App() {
   const [imageMap, setImageMap] = useState(new Map());
