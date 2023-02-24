@@ -5,5 +5,5 @@ onmessage = async (event) => {
 
   const image = await resize(file, size);
 
-  postMessage({ id, image });
+  postMessage({ id, image }, [image]);
 };

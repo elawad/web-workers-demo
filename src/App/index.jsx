@@ -41,12 +41,13 @@ function App() {
       return copy;
     });
 
-    files.forEach((file) => Workers.start(file.name, file, sizeX, setImage));
+    files.forEach((file) => {
+      Workers.start({ id: file.name, file, size: sizeX, cb: setImage });
+    });
   }
 
   function handleReset() {
-    const count = parseInt(countRef.current.value);
-    Workers.reset(count);
+    Workers.reset();
 
     fileRef.current.value = null;
     setImageMap(() => new Map());
