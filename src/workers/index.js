@@ -1,8 +1,8 @@
 import resize from './resize';
 
-const WORKERS = new Array(); // workers pool to pull from
+const WORKERS = new Array(); // worker pool to pull from
 const QUEUE = new Map(); // all tasks, running or waiting
-let WORKERS_MAX = 0; // # of workers to use
+let WORKERS_MAX = 0; // # of workers selected
 let WORKERS_SET = 0; // # of workers created
 let IN_PROGRESS = 0; // # of tasks running
 
@@ -80,7 +80,8 @@ function next(worker) {
 
 function setCount(c = 0) {
   const max = counts.at(-1);
-  const count = c > max ? max : Math.max(0, c);
+  const count = Math.min(max, Math.max(0, c));
+
   WORKERS_MAX = count;
 }
 
@@ -99,9 +100,10 @@ function reset() {
 // Use client's CPU limit for # of worker selection
 const counts = (() => {
   const limit = navigator.hardwareConcurrency;
-  const sqrt = Math.ceil(Math.sqrt(limit) + 1);
-  const keys = [...Array(sqrt).keys()];
-  return keys.map((i) => 2 ** i).filter((i) => i <= limit);
+  const log2 = Math.floor(Math.log2(limit));
+  const keys = [...Array(log2).keys()];
+  const pow2 = keys.map((i) => Math.pow(2, i + 1));
+  return [1, ...pow2];
 })();
 
 export { start, setCount, reset, counts };

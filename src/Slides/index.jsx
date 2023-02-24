@@ -159,12 +159,10 @@ function Slides() {
           <Box>
             <Image width={865} src={workerImg} />
             <Link
+              fontSize="0.65em"
               href="https://developer.chrome.com/blog/createimagebitmap-in-chrome-50"
-              textDecoration="none"
             >
-              <Text fontSize="0.35em" margin="0px" padding="0px">
-                Chrome Developers
-              </Text>
+              Chrome Developers
             </Link>
           </Box>
 
