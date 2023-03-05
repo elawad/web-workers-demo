@@ -1,9 +1,9 @@
-import { StrictMode } from 'react';
+import { StrictMode, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import './index.css';
 import App from './App';
-import Slides from './Slides';
+const Slides = lazy(() => import('./Slides'));
 
 const app = window.location.search === '?app';
 
