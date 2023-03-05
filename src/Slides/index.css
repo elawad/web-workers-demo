@@ -1,4 +1,8 @@
-.slides .app {
+.slides {
+  background-color: inherit !important;
+}
+
+.slides .slide-app {
   overflow-y: auto;
 }
 
@@ -11,12 +15,33 @@
   border-radius: var(--radius);
 }
 
-/* Code Block */
 .slides pre {
-  background-color: var(--btn) !important;
+  background-color: var(--content) !important;
   padding-inline: 0.7em !important;
 }
 .slides code {
-  font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
-    monospace !important;
+  font-family: 'Fira Code', Consolas, Monaco, monospace !important;
+}
+
+.slides a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+.slides a::before {
+  content: '';
+  position: absolute;
+  width: 6rem;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--accent);
+  transform: scaleX(0.1);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+.slides a:hover::before {
+  transform: scaleX(1);
 }

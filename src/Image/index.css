@@ -1,25 +1,23 @@
 .image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 }
 
 .image canvas {
+  display: block;
   object-fit: cover;
-  border-radius: 50%;
-  border: 2px dotted var(--secondary);
+  max-width: 100%;
+  outline: 2px dotted var(--secondary);
+  border-radius: var(--radius);
   transition: border-radius 0.5s ease-out, width 0.5s ease-out 0.25s;
 }
-.image.done canvas {
-  border-radius: var(--radius);
+.image.loading canvas {
+  border-radius: 50%;
 }
 
-.image .loading {
+.image img[alt='loading'] {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 2em;
-  transition: opacity 0.25s ease-out;
-}
-.image.done .loading {
-  opacity: 0;
 }

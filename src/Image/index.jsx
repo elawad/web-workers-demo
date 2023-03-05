@@ -7,7 +7,7 @@ import './index.css';
 const propTypes = {
   size: PropTypes.number.isRequired,
   dpr: PropTypes.number.isRequired,
-  image: PropTypes.object, // ImageBitmap type,
+  image: PropTypes.object, // ImageBitmap
 };
 
 function Image({ size, dpr, image }) {
@@ -25,12 +25,12 @@ function Image({ size, dpr, image }) {
     ctx.drawImage(image, 0, 0, w, h);
   }, [image, dpr]);
 
-  const done = image !== undefined;
+  const loading = image === undefined;
   const [w, h] = getSizes(image, dpr) ?? [size, size];
 
   return (
-    <div className={`image ${done ? 'done' : ''}`}>
-      <img src={loadingImg} className="loading" alt="Loading" />
+    <div className={`image${loading ? ' loading' : ''}`}>
+      {loading && <img src={loadingImg} alt="loading" />}
       <canvas ref={canvasRef} style={{ width: `${w}px`, height: `${h}px` }} />
     </div>
   );

@@ -28,12 +28,13 @@ const theme = {
     height: '100vh',
   },
   colors: {
+    primary: 'var(--primary)', // text
     secondary: 'var(--secondary)', // header
-    tertiary: 'var(--bg)', // background
+    tertiary: 'inherit', // background
   },
   fonts: {
-    header: '"Fira Code", "Helvetica Neue", Helvetica, Arial, sans-serif',
-    text: '"Fira Code", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    header: 'inherit',
+    text: 'inherit',
   },
   fontSizes: {
     monospace: '1.5rem',
@@ -53,12 +54,11 @@ function Slides() {
     <Deck theme={theme} template={template} className="slides">
       <Slide>
         <Heading>Web Workers</Heading>
-
         <Quote>
           <Text>Offloading work from the main thread.</Text>
         </Quote>
 
-        <FlexBox alignItems="flex-end" justifyContent="unset" flexGrow={1}>
+        <FlexBox alignItems="flex-end" justifyContent="inherit" flexGrow={1}>
           <Text fontSize="0.85em" mb="0 !important" pb="0 !important">
             Aymen Elawad
           </Text>
@@ -212,12 +212,10 @@ function Slides() {
         </FlexBox>
       </Slide>
 
-      <Slide className="app">
+      <Slide className="slide-app">
         <Heading>Demo</Heading>
 
-        <FlexBox>
-          <App />
-        </FlexBox>
+        <App inSlide />
       </Slide>
 
       <Slide>

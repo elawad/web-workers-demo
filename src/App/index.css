@@ -1,16 +1,78 @@
-.app {
-  flex-grow: 1;
+.app.space {
+  margin: 1.5em;
+}
+
+.app h1 {
+  color: var(--secondary);
+  text-align: center;
+  margin-block: 0 0.5em;
 }
 
 .app .actions {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5em;
-  padding-top: 2px;
 }
 
-.app .actions select:first-of-type {
-  margin-left: 2em;
+.app select {
+  -webkit-appearance: none;
+}
+.app select:nth-of-type(1) {
+  margin-left: 1em;
+}
+.app select:nth-of-type(2) {
+  width: 4.5em;
+}
+
+.app button,
+.app select {
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  min-width: 2em;
+  min-height: 2em;
+  cursor: pointer;
+  color: inherit;
+  background-color: var(--content);
+  transition: border-color 0.25s;
+}
+
+@media (max-width: 760px) {
+  .app.space {
+    margin: 0.5em;
+  }
+
+  .app select:nth-of-type(1) {
+    margin-left: 0;
+  }
+  .app select:nth-of-type(2) {
+    width: 3em;
+  }
+
+  .app button,
+  .app select {
+    padding: 0.3em 0.6em;
+  }
+}
+@media (max-width: 480px) or (max-height: 480px) {
+  .app select:nth-of-type(2) option[value='400'] {
+    display: none;
+  }
+}
+
+.app button:hover,
+.app select:hover {
+  border-color: var(--accent);
+}
+.app button:focus,
+.app button:focus-visible,
+.app select:focus,
+.app select:focus-visible {
+  outline: 1px solid var(--accent);
 }
 
 .app .images {
