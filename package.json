@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "type": "module",
   "engines": {
-    "node": "^16.18",
+    "node": "^18.14",
     "yarn": "^1.22"
   },
   "scripts": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "spectacle": "^9.6.0"
+    "spectacle": "^9.7.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
