@@ -34,7 +34,7 @@ function App({ inSlide }) {
 
     Workers.setCount(count);
 
-    const files = all.slice(0, 20).filter((file) => !imageMap.get(file.name));
+    const files = all.filter((file) => !imageMap.has(file.name)).slice(0, 16);
 
     if (!files.length) return;
 
