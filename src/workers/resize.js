@@ -3,12 +3,21 @@ async function resize(file, size) {
 
   if (!image) return null;
 
+  const ratio = calcRatio(image);
   let [w, h] = stepSizes(image, size);
+  let rotate = false;
 
   // Resize using step-down for better image quality.
   while (h >= size) {
+    if (rotate) [w, h] = [h, w];
+
     const opts = { resizeWidth: w, resizeHeight: h, resizeQuality: 'high' };
     image = await createImageBitmap(image, opts);
+
+    if (ratio !== calcRatio(image)) {
+      rotate = true;
+      continue;
+    }
 
     [w, h] = stepSizes(image, size);
   }
@@ -31,6 +40,10 @@ function stepSizes(image, size) {
   }
 
   return [w, h];
+}
+
+function calcRatio(image) {
+  return parseInt(image.width / image.height);
 }
 
 export default resize;

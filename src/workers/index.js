@@ -90,8 +90,8 @@ function setCount(c = 0) {
 
 // Limit worker # selection by CPU
 const counts = (() => {
-  const limit = navigator.hardwareConcurrency;
-  const log2 = Math.floor(Math.log2(limit));
+  const cpus = navigator.hardwareConcurrency;
+  const log2 = Math.floor(Math.log2(cpus));
   const keys = [...Array(log2).keys()];
   const pow2 = keys.map((i) => Math.pow(2, i + 1));
   return [1, ...pow2];
