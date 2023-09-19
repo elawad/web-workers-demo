@@ -1,9 +1,8 @@
 async function resize(file, size) {
   let image = await createImageBitmap(file).catch(console.error);
-
   if (!image) return null;
 
-  const ratio = calcRatio(image);
+  const ratio = parseInt(image.width / image.height);
   let [w, h] = stepSizes(image, size);
   let rotate = false;
 
@@ -11,10 +10,10 @@ async function resize(file, size) {
   while (h >= size) {
     if (rotate) [w, h] = [h, w];
 
-    const opts = { resizeWidth: w, resizeHeight: h, resizeQuality: 'high' };
+    const opts = { resizeWidth: w, resizeHeight: h }; // resizeQuality: 'high'
     image = await createImageBitmap(image, opts);
 
-    if (ratio !== calcRatio(image)) {
+    if (ratio !== parseInt(image.width / image.height)) {
       rotate = true;
       continue;
     }
@@ -40,10 +39,6 @@ function stepSizes(image, size) {
   }
 
   return [w, h];
-}
-
-function calcRatio(image) {
-  return parseInt(image.width / image.height);
 }
 
 export default resize;
