@@ -5,8 +5,11 @@ import './index.css';
 import App from './App';
 const Slides = lazy(() => import('./Slides'));
 
-const app = window.location.search === '?app';
+const Comp = window.location.search === '?1' ? App : Slides;
+const root = document.getElementById('root');
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>{app ? <App /> : <Slides />}</StrictMode>
+createRoot(root).render(
+  <StrictMode>
+    <Comp />
+  </StrictMode>
 );

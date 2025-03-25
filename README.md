@@ -1,9 +1,9 @@
 # Web Workers Demo
 
-> Web Workers demo in React + Vite.
+> Web workers demo in React + TypeScript.
 
 Slides - [elawad.github.io/web-workers-demo](https://elawad.github.io/web-workers-demo)
 \
-Demo - [elawad.github.io/web-workers-demo?app](https://elawad.github.io/web-workers-demo?app)
+Demo - [elawad.github.io/web-workers-demo?1](https://elawad.github.io/web-workers-demo?1)
 
-Vite Docs - [vitejs.dev/guide](https://vitejs.dev/guide/features.html#web-workers)
+Docs - [rsbuild.dev/guide](https://rsbuild.dev/guide/basic/web-workers)
