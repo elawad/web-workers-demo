@@ -1,12 +1,12 @@
-import { StrictMode, lazy } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import './index.css';
 import App from './App';
-const Slides = lazy(() => import('./Slides'));
+import Slides from './Slides';
+import './index.css';
 
 const Comp = window.location.search === '?1' ? App : Slides;
-const root = document.getElementById('root');
+const root = document.getElementById('root') as HTMLDivElement;
 
 createRoot(root).render(
   <StrictMode>

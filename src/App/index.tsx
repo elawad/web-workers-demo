@@ -1,64 +1,71 @@
-import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import Image from '../Image';
+import Image, { type ImageProps } from '../Image';
+import type { MsgDone } from '../types';
 import * as Workers from '../workers';
 import './index.css';
 
-const propTypes = { inSlide: PropTypes.bool };
+type AppProps = { inSlide?: boolean };
+type ImgMap = Map<MsgDone['id'], ImageProps>;
 
-function App({ inSlide }) {
-  const [imageMap, setImageMap] = useState(new Map());
-  const fileRef = useRef();
-  const countRef = useRef();
-  const sizeRef = useRef();
+function App({ inSlide }: AppProps) {
+  const [imageMap, setImageMap] = useState<ImgMap>(new Map());
+  const fileRef = useRef<HTMLInputElement>(null);
+  const countRef = useRef<HTMLSelectElement>(null);
+  const sizeRef = useRef<HTMLSelectElement>(null);
 
-  function imageHandler(id, image) {
-    if (!fileRef.current.value) return;
+  function imageHandler({ id, image }: MsgDone) {
+    if (!fileRef.current?.value) return;
 
     setImageMap((prev) => {
       const copy = new Map(prev);
       const data = copy.get(id);
-      copy.set(id, { ...data, image });
+      if (!data) return copy;
+
+      copy.set(id, { ...data, image, isDone: true });
       return copy;
     });
   }
 
   function filesHandler() {
-    // const all = [...event.target.files];
-    const all = [...fileRef.current.files];
-    const count = parseInt(countRef.current.value);
-    const size = parseInt(sizeRef.current.value);
+    const all = [...(fileRef.current?.files ?? [])];
+    const count = Number.parseInt(countRef.current?.value ?? '0');
+    const size = Number.parseInt(sizeRef.current?.value ?? '0');
     const dpr = window.devicePixelRatio;
     const sizeDpr = size * dpr;
 
     Workers.setCount(count);
 
     const files = all.filter((file) => !imageMap.has(file.name)).slice(0, 16);
-
     if (!files.length) return;
 
     setImageMap((prev) => {
       const copy = new Map(prev);
-      files.forEach((file) => copy.set(file.name, { size, dpr }));
+      for (const file of files) {
+        copy.set(file.name, { size, dpr });
+      }
       return copy;
     });
 
-    files.forEach((file) => {
-      Workers.start({ id: file.name, file, size: sizeDpr, cb: imageHandler });
-    });
+    for (const file of files) {
+      Workers.start({ id: file.name, file, size: sizeDpr, done: imageHandler });
+    }
   }
 
   function resetHandler() {
     Workers.reset();
 
-    fileRef.current.value = null;
-    setImageMap(() => new Map());
+    if (fileRef.current) {
+      fileRef.current.files = null;
+      fileRef.current.value = '';
+    }
+    setImageMap(new Map());
   }
 
   return (
     <main className={`app${inSlide ? '' : ' space'}`}>
       {!inSlide && <h1>Demo</h1>}
+
       <div className="actions">
         <input
           ref={fileRef}
@@ -68,8 +75,13 @@ function App({ inSlide }) {
           multiple
           hidden
         />
-        <button onClick={() => fileRef.current.click()}>Pick Images</button>
-        <button onClick={resetHandler}>×</button>
+
+        <button type="button" onClick={() => fileRef.current?.click()}>
+          Pick Images
+        </button>
+        <button type="button" onClick={resetHandler}>
+          ×
+        </button>
 
         <select ref={countRef} defaultValue={0}>
           <option disabled>Threads</option>
@@ -99,5 +111,4 @@ function App({ inSlide }) {
   );
 }
 
-App.propTypes = propTypes;
 export default App;

@@ -1,4 +1,4 @@
-import syntax from 'react-syntax-highlighter/dist/cjs/styles/prism/coldark-dark';
+import syntax from 'react-syntax-highlighter/dist/esm/styles/prism/one-dark';
 import {
   Appear,
   Box,
@@ -12,12 +12,12 @@ import {
   Progress,
   Quote,
   Slide,
+  type SpectacleThemeOverrides,
   Text,
   UnorderedList,
 } from 'spectacle';
 
 import App from '../App';
-
 import rendererImg from './renderer.jpg';
 import workerImg from './worker.jpg';
 import './index.css';
@@ -39,7 +39,7 @@ const theme = {
   fontSizes: {
     monospace: '1.5rem',
   },
-};
+} as SpectacleThemeOverrides & { size: { width: string; height: string } };
 
 const template = () => (
   <FlexBox justifyContent="flex-end" position="absolute" bottom={0} width={1}>
@@ -188,24 +188,24 @@ function Slides() {
         <FlexBox justifyContent="space-around">
           <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
             // main.js
-            const worker = new Worker('worker.js')
-                
+            const worker = new Worker('w.js')
+
             worker.postMessage(10)
-                
-            worker.onmessage = (e) => {
-              console.log(e.data)
+
+            worker.onmessage = (event) => {
+              const sum = event.data
             }
           `}</CodePane>
 
           <Appear>
             <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
-              // worker.js
+              // w.js
+              self.onmessage = (event) => {
 
-              onmessage = (e) => {
+                const sum = event.data * 2
 
-                const result = e.data * 2
+                self.postMessage(sum)
 
-                postMessage(result)
               }
             `}</CodePane>
           </Appear>

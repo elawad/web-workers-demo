@@ -20,7 +20,7 @@
   padding-inline: 0.7em !important;
 }
 .slides code {
-  font-family: 'Fira Code', Consolas, Monaco, monospace !important;
+  background-color: var(--content) !important;
 }
 
 .slides a {
