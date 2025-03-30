@@ -13,9 +13,7 @@
     "build": "rsbuild build",
     "preview": "rsbuild preview",
     "lint": "biome check --write",
-    "tsc": "tsc --noEmit",
-    "deploy": "gh-pages -d dist",
-    "predeploy": "yarn build"
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18.3.0",
@@ -28,7 +26,6 @@
     "@rsbuild/plugin-react": "^1.1.1",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
-    "gh-pages": "^6.3.0",
     "typescript": "^5.8.2"
   }
 }
