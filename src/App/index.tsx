@@ -19,10 +19,10 @@ function App({ inSlide }: AppProps) {
 
     setImageMap((prev) => {
       const copy = new Map(prev);
-      const data = copy.get(id);
-      if (!data) return copy;
-
-      copy.set(id, { ...data, image, isDone: true });
+      const props = copy.get(id);
+      if (props) {
+        copy.set(id, { ...props, image, isDone: true });
+      }
       return copy;
     });
   }
@@ -75,10 +75,10 @@ function App({ inSlide }: AppProps) {
           multiple
           hidden
         />
-
         <button type="button" onClick={() => fileRef.current?.click()}>
           Pick Images
         </button>
+
         <button type="button" onClick={resetHandler}>
           ×
         </button>
@@ -103,8 +103,8 @@ function App({ inSlide }: AppProps) {
       </div>
 
       <section className="images">
-        {[...imageMap.entries()].map(([id, data]) => (
-          <Image key={id} {...data} />
+        {[...imageMap.entries()].map(([id, props]) => (
+          <Image key={id} {...props} />
         ))}
       </section>
     </main>

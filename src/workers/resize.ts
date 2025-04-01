@@ -3,7 +3,6 @@ import type { MsgWork } from '../types';
 async function resize({ file, size }: MsgWork) {
   const rq: ImageBitmapOptions = { resizeQuality: 'high' };
   let image = await createImageBitmap(file, rq).catch(console.error);
-
   if (!image) return;
 
   const ratio = imgRatio(image);
