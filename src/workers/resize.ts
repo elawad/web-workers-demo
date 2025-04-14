@@ -30,18 +30,19 @@ async function resize({ file, size }: MsgWork) {
 }
 
 function imgSizes(image: ImageBitmap, size: number) {
-  if (image.height === size) {
+  const { width, height } = image;
+  if (height === size) {
     return [0, 0] as const; // End
   }
 
   // Step size
   const factor = 0.5;
-  let w = image.width * factor;
-  let h = image.height * factor;
+  let w = width * factor;
+  let h = height * factor;
 
   // Minimum size
   if (h < size) {
-    w = image.width / (image.height / size);
+    w = width / (height / size);
     h = size;
   }
 

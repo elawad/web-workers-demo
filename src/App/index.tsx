@@ -14,7 +14,7 @@ function App({ inSlide }: AppProps) {
   const countRef = useRef<HTMLSelectElement>(null);
   const sizeRef = useRef<HTMLSelectElement>(null);
 
-  function imageHandler({ id, image }: MsgDone) {
+  function onDone({ id, image }: MsgDone) {
     if (!fileRef.current?.value) return;
 
     setImageMap((prev) => {
@@ -27,15 +27,12 @@ function App({ inSlide }: AppProps) {
     });
   }
 
-  function filesHandler() {
+  function onFiles() {
     const all = [...(fileRef.current?.files ?? [])];
     const count = Number.parseInt(countRef.current?.value ?? '0');
     const size = Number.parseInt(sizeRef.current?.value ?? '0');
     const dpr = window.devicePixelRatio;
     const sizeDpr = size * dpr;
-
-    Workers.setCount(count);
-
     const files = all.filter((file) => !imageMap.has(file.name)).slice(0, 16);
     if (!files.length) return;
 
@@ -47,12 +44,13 @@ function App({ inSlide }: AppProps) {
       return copy;
     });
 
+    Workers.setCount(count);
     for (const file of files) {
-      Workers.start({ id: file.name, file, size: sizeDpr, done: imageHandler });
+      Workers.start({ id: file.name, file, size: sizeDpr, onDone });
     }
   }
 
-  function resetHandler() {
+  function onReset() {
     Workers.reset();
 
     if (fileRef.current) {
@@ -69,7 +67,7 @@ function App({ inSlide }: AppProps) {
       <div className="actions">
         <input
           ref={fileRef}
-          onChange={filesHandler}
+          onChange={onFiles}
           type="file"
           accept="image/jpeg, image/png"
           multiple
@@ -79,7 +77,7 @@ function App({ inSlide }: AppProps) {
           Pick Images
         </button>
 
-        <button type="button" onClick={resetHandler}>
+        <button type="button" onClick={onReset}>
           ×
         </button>
 

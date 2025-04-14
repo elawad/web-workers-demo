@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import loadingImg from './loading.svg';
 import './index.css';
@@ -11,25 +11,28 @@ type ImageProps = {
 };
 
 function Image({ size, dpr, image, isDone }: ImageProps) {
+  const [sizes, setSizes] = useState<[number, number]>([size, size]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!image) return;
 
-    const [w, h] = imgSizes(image, dpr);
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = image.width;
-    canvas.height = image.height;
+    const { width, height } = image;
+    const w = width / dpr;
+    const h = height / dpr;
+    canvas.width = width;
+    canvas.height = height;
     ctx.scale(dpr, dpr);
     ctx.drawImage(image, 0, 0, w, h);
-  }, [image, dpr]);
+    image.close();
+    setSizes([w, h]);
+  }, [dpr, image]);
 
-  const [w, h] = image ? imgSizes(image, dpr) : [size, size];
+  const [w, h] = sizes;
 
   return (
     <div className={`image${isDone ? '' : ' loading'}`}>
@@ -38,12 +41,6 @@ function Image({ size, dpr, image, isDone }: ImageProps) {
       <canvas ref={canvasRef} style={{ width: `${w}px`, height: `${h}px` }} />
     </div>
   );
-}
-
-function imgSizes(image: ImageBitmap, dpr: number) {
-  const w = image.width / dpr;
-  const h = image.height / dpr;
-  return [w, h] as const;
 }
 
 export default Image;

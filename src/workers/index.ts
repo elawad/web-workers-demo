@@ -6,7 +6,7 @@ const QUEUE = new Map<Queue['id'], Queue>();
 let WORKERS_MAX = 0;
 let WORKERS_SET = 0;
 
-type Data = MsgWork & { done: (msg: MsgDone) => void };
+type Data = MsgWork & { onDone: (msg: MsgDone) => void };
 type Queue = Data & { isWait?: boolean };
 
 async function start(data: Data) {
@@ -14,7 +14,7 @@ async function start(data: Data) {
   const maxFlight = !!inFlight && inFlight >= WORKERS_MAX;
   const maxWorkers = !!WORKERS_SET && WORKERS_SET >= WORKERS_MAX;
 
-  const { id, file, size, done } = data;
+  const { id, file, size, onDone } = data;
   const msg: MsgWork = { id, file, size };
 
   QUEUE.set(id, data);
@@ -28,7 +28,7 @@ async function start(data: Data) {
   // Use main thread
   if (!WORKERS_MAX) {
     const image = await resize(msg);
-    done({ id, image });
+    onDone({ id, image });
     QUEUE.delete(id);
     next();
     return;
@@ -49,7 +49,7 @@ async function start(data: Data) {
 
   worker.onmessage = (event: MessageEvent<MsgDone>) => {
     const { id } = event.data;
-    QUEUE.get(id)?.done(event.data);
+    QUEUE.get(id)?.onDone(event.data);
     QUEUE.delete(id);
     WORKERS.push(worker);
     next();

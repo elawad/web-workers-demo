@@ -3,7 +3,7 @@
 }
 
 .image canvas {
-  display: block;
+  vertical-align: middle;
   object-fit: cover;
   max-width: 100%;
   outline: 2px dotted var(--secondary);
