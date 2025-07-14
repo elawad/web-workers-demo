@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import loadingImg from './loading.svg';
 import './index.css';
+
+import loadingImg from './loading.svg';
 
 type ImageProps = {
   size: number;
@@ -15,11 +16,9 @@ function Image({ size, dpr, image, isDone }: ImageProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!image) return;
-
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
+    if (!image || !canvas || !ctx) return;
 
     const { width, height } = image;
     const w = width / dpr;

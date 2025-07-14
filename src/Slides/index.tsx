@@ -17,10 +17,11 @@ import {
   UnorderedList,
 } from 'spectacle';
 
+import './index.css';
+
 import App from '../App';
 import rendererImg from './renderer.jpg';
 import workerImg from './worker.jpg';
-import './index.css';
 
 const theme = {
   size: {

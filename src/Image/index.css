@@ -8,7 +8,9 @@
   max-width: 100%;
   outline: 2px dotted var(--secondary);
   border-radius: var(--radius);
-  transition: border-radius 0.5s ease-out, width 0.5s ease-out 0.25s;
+  transition:
+    border-radius 0.5s ease-out,
+    width 0.5s ease-out 0.25s;
 }
 .image.loading canvas {
   border-radius: 50%;

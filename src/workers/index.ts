@@ -1,13 +1,13 @@
 import type { MsgDone, MsgWork } from '../types';
 import resize from './resize';
 
-const WORKERS = new Array<Worker>();
+const WORKERS: Worker[] = [];
 const QUEUE = new Map<Queue['id'], Queue>();
 let WORKERS_MAX = 0;
 let WORKERS_SET = 0;
 
 type Data = MsgWork & { onDone: (msg: MsgDone) => void };
-type Queue = Data & { isWait?: boolean };
+type Queue = Data & { isWait: boolean };
 
 async function start(data: Data) {
   const inFlight = [...QUEUE.values()].filter((v) => !v.isWait).length;
@@ -16,14 +16,10 @@ async function start(data: Data) {
 
   const { id, file, size, onDone } = data;
   const msg: MsgWork = { id, file, size };
+  QUEUE.set(id, { ...data, isWait: maxFlight });
 
-  QUEUE.set(id, data);
-
-  // Set waiting in queue
-  if (maxFlight) {
-    QUEUE.set(id, { ...data, isWait: true });
-    return;
-  }
+  // Waiting in queue
+  if (maxFlight) return;
 
   // Use main thread
   if (!WORKERS_MAX) {
@@ -69,7 +65,7 @@ function next() {
   const entry = [...QUEUE.values()].find((v) => v.isWait);
   if (entry) {
     QUEUE.delete(entry.id);
-    const { isWait, ...data } = entry;
+    const { isWait: _unused, ...data } = entry;
     start(data);
     return;
   }

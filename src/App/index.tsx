@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
 
+import './index.css';
+
 import Image, { type ImageProps } from '../Image';
 import type { MsgDone } from '../types';
 import * as Workers from '../workers';
-import './index.css';
 
 type AppProps = { inSlide?: boolean };
 type ImgMap = Map<MsgDone['id'], ImageProps>;
@@ -28,7 +29,7 @@ function App({ inSlide }: AppProps) {
   }
 
   function onFiles() {
-    const all = [...(fileRef.current?.files ?? [])];
+    const all = Array.from(fileRef.current?.files ?? []);
     const count = Number.parseInt(countRef.current?.value ?? '0');
     const size = Number.parseInt(sizeRef.current?.value ?? '0');
     const dpr = window.devicePixelRatio;
