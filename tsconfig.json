@@ -5,10 +5,10 @@
     "outDir": "dist/",
 
     "jsx": "react-jsx",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": ["esnext", "dom"],
+    "target": "esnext",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "target": "esnext",
 
     "isolatedModules": true,
     "noUncheckedIndexedAccess": true,
