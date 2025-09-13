@@ -51,7 +51,7 @@ function imgSizes(image: ImageBitmap, size: number) {
 
 function imgRatio(image: ImageBitmap) {
   const ratio = image.width / image.height;
-  return Number.parseInt(ratio.toString());
+  return Number.parseInt(ratio.toString(), 10);
 }
 
 export default resize;

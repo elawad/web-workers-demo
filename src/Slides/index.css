@@ -1,7 +1,3 @@
-.slides {
-  background-color: inherit !important;
-}
-
 .slides .slide-app {
   overflow-y: auto;
 }
@@ -13,14 +9,6 @@
 .slides pre,
 .slides img[width] {
   border-radius: var(--radius);
-}
-
-.slides pre {
-  background-color: var(--content) !important;
-  padding-inline: 0.7em !important;
-}
-.slides code {
-  background-color: var(--content) !important;
 }
 
 .slides a {

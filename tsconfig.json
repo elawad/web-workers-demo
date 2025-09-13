@@ -10,9 +10,9 @@
     "module": "esnext",
     "moduleResolution": "bundler",
 
-    "isolatedModules": true,
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "verbatimModuleSyntax": true
   }
 }

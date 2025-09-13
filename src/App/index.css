@@ -16,6 +16,7 @@
 }
 
 .app select {
+  appearance: none;
   -webkit-appearance: none;
 }
 .app select:nth-of-type(1) {

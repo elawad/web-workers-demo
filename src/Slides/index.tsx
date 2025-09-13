@@ -4,6 +4,7 @@ import {
   Box,
   CodePane,
   Deck,
+  type DeckProps,
   FlexBox,
   Heading,
   Image,
@@ -12,7 +13,6 @@ import {
   Progress,
   Quote,
   Slide,
-  type SpectacleThemeOverrides,
   Text,
   UnorderedList,
 } from 'spectacle';
@@ -22,33 +22,6 @@ import './index.css';
 import App from '../App';
 import rendererImg from './renderer.jpg';
 import workerImg from './worker.jpg';
-
-const theme = {
-  size: {
-    width: '100vw',
-    height: '100vh',
-  },
-  colors: {
-    primary: 'var(--primary)', // text
-    secondary: 'var(--secondary)', // header
-    tertiary: 'inherit', // background
-  },
-  fonts: {
-    header: 'inherit',
-    text: 'inherit',
-  },
-  fontSizes: {
-    monospace: '1.5rem',
-  },
-} as SpectacleThemeOverrides & { size: { width: string; height: string } };
-
-const template = () => (
-  <FlexBox justifyContent="flex-end" position="absolute" bottom={0} width={1}>
-    <Box padding="0.5em 1em">
-      <Progress />
-    </Box>
-  </FlexBox>
-);
 
 function Slides() {
   return (
@@ -187,7 +160,7 @@ function Slides() {
         <Heading>How to Use</Heading>
 
         <FlexBox justifyContent="space-around">
-          <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
+          <CodePane language="js" theme={themeJs} showLineNumbers={false}>{`
             // main.js
             const worker = new Worker('w.js')
 
@@ -199,7 +172,7 @@ function Slides() {
           `}</CodePane>
 
           <Appear>
-            <CodePane language="js" theme={syntax} showLineNumbers={false}>{`
+            <CodePane language="js" theme={themeJs} showLineNumbers={false}>{`
               // w.js
               self.onmessage = (event) => {
 
@@ -253,3 +226,39 @@ function Slides() {
 }
 
 export default Slides;
+
+// Internals:
+type Theme = DeckProps['theme'] & { size: { width: string; height: string } };
+
+const theme = {
+  size: { width: '100vw', height: '100vh' },
+  colors: {
+    primary: 'var(--primary)', // text
+    secondary: 'var(--secondary)', // header
+    tertiary: 'inherit', // background
+  },
+  backdropStyle: { backgroundColor: 'inherit' },
+  fonts: { header: 'inherit', text: 'inherit' },
+  fontSizes: { monospace: '1.5rem' },
+} as Theme;
+
+const themeJs = {
+  ...syntax,
+  'code[class*="language-"]': {
+    ...syntax['code[class*="language-"]'],
+    background: 'var(--content)',
+  },
+  'pre[class*="language-"]': {
+    ...syntax['pre[class*="language-"]'],
+    background: 'var(--content)',
+    paddingInline: '0.7em',
+  },
+};
+
+const template = () => (
+  <FlexBox justifyContent="flex-end" position="absolute" bottom={0} width={1}>
+    <Box padding="0.5em 1em">
+      <Progress />
+    </Box>
+  </FlexBox>
+);

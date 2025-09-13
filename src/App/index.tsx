@@ -30,8 +30,8 @@ function App({ inSlide }: AppProps) {
 
   function onFiles() {
     const all = Array.from(fileRef.current?.files ?? []);
-    const count = Number.parseInt(countRef.current?.value ?? '0');
-    const size = Number.parseInt(sizeRef.current?.value ?? '0');
+    const count = Number.parseInt(countRef.current?.value ?? '0', 10);
+    const size = Number.parseInt(sizeRef.current?.value ?? '0', 10);
     const dpr = window.devicePixelRatio;
     const sizeDpr = size * dpr;
     const files = all.filter((file) => !imageMap.has(file.name)).slice(0, 16);
