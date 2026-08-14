@@ -21,6 +21,8 @@ function Image({ size, dpr, image, isDone }: ImageProps) {
     if (!image || !canvas || !ctx) return;
 
     const { width, height } = image;
+    if (!width || !height) return;
+
     const w = width / dpr;
     const h = height / dpr;
     canvas.width = width;
@@ -43,4 +45,3 @@ function Image({ size, dpr, image, isDone }: ImageProps) {
 }
 
 export default Image;
-export type { ImageProps };

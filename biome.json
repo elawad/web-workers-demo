@@ -12,5 +12,7 @@
   "javascript": {
     "formatter": { "quoteStyle": "single", "trailingCommas": "es5" }
   },
-  "css": { "formatter": { "enabled": true, "quoteStyle": "single" } }
+  "css": {
+    "formatter": { "enabled": true, "quoteStyle": "single" }
+  }
 }

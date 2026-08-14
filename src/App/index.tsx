@@ -1,12 +1,13 @@
-import { useRef, useState } from 'react';
+import { type ComponentProps, useRef, useState } from 'react';
 
 import './index.css';
 
-import Image, { type ImageProps } from '../Image';
+import Image from '../Image';
 import type { MsgDone } from '../types';
 import * as Workers from '../workers';
 
 type AppProps = { inSlide?: boolean };
+type ImageProps = ComponentProps<typeof Image>;
 type ImgMap = Map<MsgDone['id'], ImageProps>;
 
 function App({ inSlide }: AppProps) {
@@ -31,7 +32,7 @@ function App({ inSlide }: AppProps) {
   function onFiles() {
     const all = Array.from(fileRef.current?.files ?? []);
     const count = Number.parseInt(countRef.current?.value ?? '0', 10);
-    const size = Number.parseInt(sizeRef.current?.value ?? '0', 10);
+    const size = Number.parseInt(sizeRef.current?.value ?? '240', 10);
     const dpr = window.devicePixelRatio;
     const sizeDpr = size * dpr;
     const files = all.filter((file) => !imageMap.has(file.name)).slice(0, 16);

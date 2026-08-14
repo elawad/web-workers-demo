@@ -91,7 +91,7 @@ function setCount(c: number) {
   WORKERS_MAX = count;
 }
 
-// Limit worker # selection by CPU
+// Limit worker selection by CPU
 const counts = (() => {
   const cpus = navigator.hardwareConcurrency;
   const log2 = Math.floor(Math.log2(cpus));
@@ -100,4 +100,4 @@ const counts = (() => {
   return [1, ...pow2];
 })();
 
-export { start, reset, setCount, counts };
+export { counts, reset, setCount, start };
