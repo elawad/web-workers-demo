@@ -251,6 +251,7 @@ const themeJs = {
   'pre[class*="language-"]': {
     ...syntax['pre[class*="language-"]'],
     background: 'var(--content)',
+    borderRadius: 'var(--radius)',
     paddingInline: '0.7em',
   },
 };
